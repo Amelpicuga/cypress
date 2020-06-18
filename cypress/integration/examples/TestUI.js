@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-describe('my first test suite',function(){  
+describe('my second test suite',function(){  
 
     it('my first test case',function(){
     cy.visit('https://rahulshettyacademy.com/AutomationPractice/')
@@ -29,6 +29,56 @@ describe('my first test suite',function(){
     //radiobutton
     cy.get('[value="radio2"]').check()
 
+    cy.get('#alertbtn').click()
+        cy.get('[value="Confirm"]').click()
+    //windows:alert
+
+    cy.on(('window:alert'),(string)=>{
+        //mocha
+        expect(string).to.eqls('Hello , share this practice page and share your knowledge')
+    })
+
+    cy.on(('window:confirm'),(string)=>{
+        //mocha
+        expect(string).to.eqls('Hello , Are you sure you want to confirm?')
+
+    })
+
+
+    cy.get('#opentab').invoke('removeAttr','target').click()
+    cy.url().should('include','rahulshettyacademy')
+    cy.go('back')
+
+//handling values in tables
+    cy.get('tr td:nth-child(2)').each(($el,index,$list)=>{
+
+       const text=$el.text()
+       if(text.includes("Python")){
+
+            cy.get('tr td:nth-child(2)').eq(index).next().then(function(price){
+                const pricetext=price.text()
+                expect(pricetext).to.equal('25')
+            })
+       }
+    })
+
+
+//hover
+
+cy.get('.mouse-hover-content').invoke('show')
+cy.contains('Top').click()
+cy.url().should('include','top')
+
+
+//forcing hiden btn
+cy.contains('Top').click({force: true})
+cy.url().should('include','top')
+
+//child window 2
+cy.get('#opentab').then(function(qa){
+   const url= qa.prop('href')
+   cy.visit(url)
+})
 
 
 
