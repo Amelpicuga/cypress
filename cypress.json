@@ -1,5 +1,10 @@
 {
   "defaultCommandTimeout": 6000,
   "pageLoadTimeout": 100000,
-  "projectId": "rov1s2"
+  "projectId": "rov1s2",
+  "waitForAnimations":true,
+  "capture":"viewport",
+  "viewportWidth":1024,
+  "viewportHeight":758
+  
 }
